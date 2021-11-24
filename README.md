@@ -10,7 +10,7 @@ Please cite this preprint if you use this code.
 
  * Fairseq toolkit:  https://github.com/pytorch/fairseq  Make sure you can `import fairseq` in Python.
  * torch, numpy, scipy, torchaudio
- * I have exported my conda environment for this project to `environment.yml`; it may contain some extra stuff that you don't need.
+ * I have exported my conda environment for this project to `environment.yml`
  * You also need to download a pretrained wav2vec2 model checkpoint.  These can be obtained here:  https://github.com/pytorch/fairseq/tree/main/examples/wav2vec  Please choose `wav2vec_small.pt`, `w2v_large_lv_fsh_swbd_cv.pt`, or `xlsr_53_56k.pt`. 
  * You also need to have a MOS dataset.  Datasets for the MOS prediction challenge will be released once the challenge starts.  TODO update with a link.
 
