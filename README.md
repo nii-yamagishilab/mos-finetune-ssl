@@ -2,11 +2,7 @@
 
 This is code for our paper under review for ICASSP 2022:
 
-"Generalization Ability of MOS Prediction Networks"
-
-Erica Cooper, Wen-Chin Huang, Tomoki Toda, Junichi Yamagishi
-
-https://arxiv.org/abs/2110.02635
+"Generalization Ability of MOS Prediction Networks"  Erica Cooper, Wen-Chin Huang, Tomoki Toda, Junichi Yamagishi  https://arxiv.org/abs/2110.02635
 
 Please cite this preprint if you use this code.
 
