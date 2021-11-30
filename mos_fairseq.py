@@ -20,14 +20,15 @@ print('DEVICE: ' + str(device))
 
 ########## Please change these to your own paths ##########
 
-wavdir = '/home/smg/cooper/proj-mosnet-phase2/MOSNets/DATA/wav'
-trainlist = '/home/smg/cooper/proj-mosnet-phase2/MOSNets/DATA/sets/train_mos_list.txt'
-validlist = '/home/smg/cooper/proj-mosnet-phase2/MOSNets/DATA/sets/val_mos_list.txt'
-
+datadir = '/home/smg/cooper/phase1-main/DATA'
 cp_path = '/home/smg/cooper/proj-mosnet-phase2/fairseq/examples/wav2vec/models/wav2vec_small.pt'  ## path to a pretrained fairseq model.
 ## please use a wav2vec_small.pt, w2v_large_lv_fsh_swbd_cv.pt, or xlsr_53_56k.pt
 
 ###########################################################
+
+wavdir = os.path.join(datadir, 'wav')
+trainlist = os.path.join(datadir, 'sets/train_mos_list.txt')
+validlist = os.path.join(datadir, 'sets/val_mos_list.txt')
 
 if cp_path.split('/')[-1] == 'wav2vec_small.pt':
     SSL_OUT_DIM = 768

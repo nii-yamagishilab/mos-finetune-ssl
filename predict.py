@@ -4,20 +4,22 @@
 # All rights reserved.
 # ==============================================================================
 
+import os
 import torch
 import torch.nn as nn
 import fairseq
 from torch.utils.data import DataLoader
-from mos_fairseq import MosPredictor, MyDataset, cp_path, wavdir, validlist
+from mos_fairseq import MosPredictor, MyDataset, cp_path, wavdir, validlist, datadir
 import numpy as np
 import scipy.stats
 
 ########## Please change these to your own paths ##########
 
-my_checkpoint = 'checkpoints/ckpt_16'  ## pick your favorite trained checkpoint
-system_csv_path = '/home/smg/cooper/proj-mosnet-phase2/MOSNets/DATA/mydata_system.csv'
+my_checkpoint = 'checkpoints/ckpt_6'  ## pick your favorite trained checkpoint
 
 ###########################################################
+
+system_csv_path = os.path.join(datadir, 'mydata_system.csv')
 
 model, cfg, task = fairseq.checkpoint_utils.load_model_ensemble_and_task([cp_path])
 ssl_model = model[0]
@@ -92,7 +94,7 @@ for line in csv_file:
     true_sys_MOS_avg[sysID] = MOS
 
 def systemID(uttID):
-    return uttID.split('-')[0] + '-' + uttID.split('-')[1]
+    return uttID.split('-')[0]
 
 pred_sys_MOSes = { }
 for uttID in sorted_uttIDs:
@@ -125,3 +127,9 @@ print('[SYSTEM] Spearman rank correlation coefficient= %f' % SRCC[0])
 KTAU=scipy.stats.kendalltau(sys_true, sys_predicted)
 print('[SYSTEM] Kendall Tau rank correlation coefficient= %f' % KTAU[0])
 
+## generate answer.txt for codalab
+ans = open('answer.txt', 'w')
+for k, v in predictions.items():
+    outl = k.split('.')[0] + ',' + str(v) + '\n'
+    ans.write(outl)
+ans.close()

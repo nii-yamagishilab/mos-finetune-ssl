@@ -18,7 +18,8 @@ Please cite this preprint if you use this code.
  * Modify the paths in `mos_fairseq.py` to point to your own data and SSL checkpoints.
  * Run `python mos_fairseq.py` to finetune an SSL model on the data.
  * Modify variables in `predict.py` to point to your favorite checkpoint.
- * run `predict.py` to run inference using that checkpoint.
+ * Run `predict.py` to run inference using that checkpoint.
+ * A file called `answer.txt` should have been generated; you can compress it using zip and submit it to CodaLab.
 
 ## Acknowledgments
 
