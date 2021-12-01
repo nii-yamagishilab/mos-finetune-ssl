@@ -21,7 +21,8 @@ print('DEVICE: ' + str(device))
 ########## Please change these to your own paths ##########
 
 datadir = '/home/smg/cooper/phase1-main/DATA'
-cp_path = '/home/smg/cooper/proj-mosnet-phase2/fairseq/examples/wav2vec/models/wav2vec_small.pt'  ## path to a pretrained fairseq model.
+cp_path = '/home/smg/cooper/proj-mosnet-phase2/fairseq-pretrained-models/wav2vec2/w2v_large_lv_fsh_swbd_cv.pt'
+## ^ path to a pretrained fairseq model.
 ## please use a wav2vec_small.pt, w2v_large_lv_fsh_swbd_cv.pt, or xlsr_53_56k.pt
 
 ###########################################################
