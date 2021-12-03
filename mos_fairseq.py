@@ -98,7 +98,7 @@ class MyDataset(Dataset):
     
 
 trainset = MyDataset(wavdir, trainlist)
-trainloader = DataLoader(trainset, batch_size=8, shuffle=True, num_workers=2, collate_fn=trainset.collate_fn)
+trainloader = DataLoader(trainset, batch_size=4, shuffle=True, num_workers=2, collate_fn=trainset.collate_fn)
 
 validset = MyDataset(wavdir, validlist)
 validloader = DataLoader(validset, batch_size=2, shuffle=True, num_workers=2, collate_fn=validset.collate_fn)
