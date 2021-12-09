@@ -14,7 +14,7 @@ Please make sure you have installed the dependencies specified in the main READM
 
 ### Data preparation
 
-After downloading the dataset preparation scripts, please follow the instructions to gather the complete training and development set. For the rest of this README, we assume that the data is put under `data/`, but feel free to put it somewhere else. The data directorty should have the following structure:
+After downloading the dataset preparation scripts, please follow the instructions to gather the complete training and development set. For the rest of this README, we assume that the data is put under `data/`, but feel free to put it somewhere else. The data directory should have the following structure:
 ```
 data
 └── phase1-main
