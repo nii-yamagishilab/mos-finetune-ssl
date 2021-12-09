@@ -21,7 +21,7 @@ print('DEVICE: ' + str(device))
 ########## Please change these to your own paths ##########
 
 datadir = '/home/smg/cooper/phase1-main/DATA'
-cp_path = '/home/smg/cooper/proj-mosnet-phase2/fairseq-pretrained-models/wav2vec2/w2v_large_lv_fsh_swbd_cv.pt'
+cp_path = '/home/smg/cooper/proj-mosnet-phase2/fairseq/examples/wav2vec/models/wav2vec_small.pt'
 ## ^ path to a pretrained fairseq model.
 ## please use a wav2vec_small.pt, w2v_large_lv_fsh_swbd_cv.pt, or xlsr_53_56k.pt
 
@@ -31,10 +31,14 @@ wavdir = os.path.join(datadir, 'wav')
 trainlist = os.path.join(datadir, 'sets/train_mos_list.txt')
 validlist = os.path.join(datadir, 'sets/val_mos_list.txt')
 
-if cp_path.split('/')[-1] == 'wav2vec_small.pt':
+ssl_model_type = cp_path.split('/')[-1]
+if ssl_model_type == 'wav2vec_small.pt':
     SSL_OUT_DIM = 768
-else:
+elif ssl_model_type in ['w2v_large_lv_fsh_swbd_cv.pt', 'xlsr_53_56k.pt']:
     SSL_OUT_DIM = 1024
+else:
+    print('*** ERROR *** SSL model type ' + ssl_model_type + ' not supported.')
+    exit()
 
 model, cfg, task = fairseq.checkpoint_utils.load_model_ensemble_and_task([cp_path])
 ssl_model = model[0]
