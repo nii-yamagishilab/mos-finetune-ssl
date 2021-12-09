@@ -5,6 +5,7 @@
 # ==============================================================================
 
 import os
+import argparse
 import fairseq
 import torch
 import torchaudio
@@ -15,34 +16,7 @@ from torch.utils.data import DataLoader
 import random
 random.seed(1984)
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print('DEVICE: ' + str(device))
-
-########## Please change these to your own paths ##########
-
-datadir = '/home/smg/cooper/phase1-main/DATA'
-cp_path = '/home/smg/cooper/proj-mosnet-phase2/fairseq/examples/wav2vec/models/wav2vec_small.pt'
-## ^ path to a pretrained fairseq model.
-## please use a wav2vec_small.pt, w2v_large_lv_fsh_swbd_cv.pt, or xlsr_53_56k.pt
-
-###########################################################
-
-wavdir = os.path.join(datadir, 'wav')
-trainlist = os.path.join(datadir, 'sets/train_mos_list.txt')
-validlist = os.path.join(datadir, 'sets/val_mos_list.txt')
-
-ssl_model_type = cp_path.split('/')[-1]
-if ssl_model_type == 'wav2vec_small.pt':
-    SSL_OUT_DIM = 768
-elif ssl_model_type in ['w2v_large_lv_fsh_swbd_cv.pt', 'xlsr_53_56k.pt']:
-    SSL_OUT_DIM = 1024
-else:
-    print('*** ERROR *** SSL model type ' + ssl_model_type + ' not supported.')
-    exit()
-
-model, cfg, task = fairseq.checkpoint_utils.load_model_ensemble_and_task([cp_path])
-ssl_model = model[0]
-ssl_model.remove_pretraining_modules()
+SSL_OUT_DIM=768
 
 class MosPredictor(nn.Module):
     def __init__(self, ssl_model):
@@ -99,21 +73,50 @@ class MyDataset(Dataset):
         output_wavs = torch.stack(output_wavs, dim=0)
         scores  = torch.stack([torch.tensor(x) for x in list(scores)], dim=0)
         return output_wavs, scores, wavnames
+
     
+def main():
 
-trainset = MyDataset(wavdir, trainlist)
-trainloader = DataLoader(trainset, batch_size=4, shuffle=True, num_workers=2, collate_fn=trainset.collate_fn)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--datadir', type=str, required=True, help='Path of your DATA/ directory')
+    parser.add_argument('--fairseq_base_model', type=str, required=True, help='Path to pretrained fairseq base model')
+    args = parser.parse_args()
 
-validset = MyDataset(wavdir, validlist)
-validloader = DataLoader(validset, batch_size=2, shuffle=True, num_workers=2, collate_fn=validset.collate_fn)
+    cp_path = args.fairseq_base_model
+    datadir = args.datadir
 
-net = MosPredictor(ssl_model)
-net = net.to(device)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print('DEVICE: ' + str(device))
 
-criterion = nn.L1Loss()
-optimizer = optim.SGD(net.parameters(), lr=0.0001, momentum=0.9)
+    wavdir = os.path.join(datadir, 'wav')
+    trainlist = os.path.join(datadir, 'sets/train_mos_list.txt')
+    validlist = os.path.join(datadir, 'sets/val_mos_list.txt')
 
-if __name__ == '__main__':
+    ssl_model_type = cp_path.split('/')[-1]
+    if ssl_model_type == 'wav2vec_small.pt':
+        SSL_OUT_DIM = 768
+    elif ssl_model_type in ['w2v_large_lv_fsh_swbd_cv.pt', 'xlsr_53_56k.pt']:
+        SSL_OUT_DIM = 1024
+    else:
+        print('*** ERROR *** SSL model type ' + ssl_model_type + ' not supported.')
+        exit()
+
+    model, cfg, task = fairseq.checkpoint_utils.load_model_ensemble_and_task([cp_path])
+    ssl_model = model[0]
+    ssl_model.remove_pretraining_modules()
+
+    trainset = MyDataset(wavdir, trainlist)
+    trainloader = DataLoader(trainset, batch_size=4, shuffle=True, num_workers=2, collate_fn=trainset.collate_fn)
+
+    validset = MyDataset(wavdir, validlist)
+    validloader = DataLoader(validset, batch_size=2, shuffle=True, num_workers=2, collate_fn=validset.collate_fn)
+
+    net = MosPredictor(ssl_model)
+    net = net.to(device)
+
+    criterion = nn.L1Loss()
+    optimizer = optim.SGD(net.parameters(), lr=0.0001, momentum=0.9)
+
     PREV_VAL_LOSS=9999999999
     orig_patience=20
     patience=orig_patience
@@ -134,8 +137,6 @@ if __name__ == '__main__':
             running_loss += loss.item()
         print('EPOCH: ' + str(epoch))
         print('AVG EPOCH TRAIN LOSS: ' + str(running_loss / STEPS))
-
-        ## have it run validation every epoch & print loss
         epoch_val_loss = 0.0
         net.eval()
         ## clear memory to avoid OOM
@@ -168,3 +169,5 @@ if __name__ == '__main__':
         
     print('Finished Training')
 
+if __name__ == '__main__':
+    main()

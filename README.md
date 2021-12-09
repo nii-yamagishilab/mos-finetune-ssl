@@ -11,15 +11,12 @@ Please cite this preprint if you use this code.
  * Fairseq toolkit:  https://github.com/pytorch/fairseq  Make sure you can `import fairseq` in Python.
  * torch, numpy, scipy, torchaudio
  * I have exported my conda environment for this project to `environment.yml`
- * You also need to download a pretrained wav2vec2 model checkpoint.  These can be obtained here:  https://github.com/pytorch/fairseq/tree/main/examples/wav2vec  Please choose `wav2vec_small.pt`, `w2v_large_lv_fsh_swbd_cv.pt`, or `xlsr_53_56k.pt`. 
- * You also need to have a MOS dataset.  Datasets for the MOS prediction challenge will be released once the challenge starts.  TODO update with a link.
+ * You also need to download a pretrained wav2vec2 model checkpoint.  These can be obtained here:  https://github.com/pytorch/fairseq/tree/main/examples/wav2vec  If you are using the `run_inference_for_challenge.py` script, one will be downloaded for you automatically.  Otherwise, please choose `wav2vec_small.pt`, `w2v_large_lv_fsh_swbd_cv.pt`, or `xlsr_53_56k.pt`. 
+ * You also need to have a MOS dataset.  Datasets for the MOS prediction challenge will be released once the challenge starts.
 
 ## How to use
- * Modify the paths in `mos_fairseq.py` to point to your own data and SSL checkpoints.
- * Run `python mos_fairseq.py` to finetune an SSL model on the data.
- * Modify variables in `predict.py` to point to your favorite checkpoint.
- * Run `predict.py` to run inference using that checkpoint.
- * A file called `answer.txt` should have been generated; you can compress it using zip and submit it to CodaLab.
+
+Please see instructions in `VoiceMOS_baseline_README.md`
 
 ## Acknowledgments
 
