@@ -33,8 +33,7 @@ data
 
 We provide a pre-finetuned model on Dropbox; to download it and run inference, run:
 
-```python run_inference_for_challenge.py --datadir data/phase1-main/DATA
-```
+`python run_inference_for_challenge.py --datadir data/phase1-main/DATA`
 
 You should see the following output:
 
@@ -65,10 +64,8 @@ First, make sure you already have the dataset and one pretrained fairseq base mo
 
 To run your own finetuning using the BVCC dataset, run:
 
-```python mos_fairseq.py --datadir data/phase1-main/DATA --fairseq_base_model fairseq/wav2vec_small.pt
-```
+`python mos_fairseq.py --datadir data/phase1-main/DATA --fairseq_base_model fairseq/wav2vec_small.pt`
 
 Once the training has finished, checkpoints can be found in the `checkpoints` directory.  The best one is the one with the highest number.  To run inference using this checkpoint, run:
 
-```python predict.py --fairseq_base_model fairseq/wav2vec_small.pt --finetuned_checkpoint checkpoints/ckpt_XX --datadir data/phase1-main/DATA 
-```
+`python predict.py --fairseq_base_model fairseq/wav2vec_small.pt --finetuned_checkpoint checkpoints/ckpt_XX --datadir data/phase1-main/DATA`
