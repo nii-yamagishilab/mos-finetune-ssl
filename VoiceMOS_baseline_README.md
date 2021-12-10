@@ -53,6 +53,10 @@ Starting prediction
 
 A file called `answer.txt` will also be generated.
 
+To run zero-shot inference on the out-of-domain development set for the OOD track, you can simply point the command to the OOD data instead:
+
+`python run_inference_for_challenge.py --datadir data/phase1-ood/DATA`
+
 ### Submission to CodaLab
 
 The submission format of the CodaLab competition platform is a zip file (can be any name) containing a text file called `answer.txt` (this naming is a **MUST**).  
