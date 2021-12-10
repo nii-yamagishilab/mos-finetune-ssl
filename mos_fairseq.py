@@ -80,11 +80,18 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--datadir', type=str, required=True, help='Path of your DATA/ directory')
     parser.add_argument('--fairseq_base_model', type=str, required=True, help='Path to pretrained fairseq base model')
+    parser.add_argument('--finetune_from_checkpoint', type=str, required=False, help='Path to your checkpoint to finetune from')
+    parser.add_argument('--outdir', type=str, required=False, default='checkpoints', help='Output directory for your trained checkpoints')
     args = parser.parse_args()
 
     cp_path = args.fairseq_base_model
     datadir = args.datadir
-
+    ckptdir = args.outdir
+    my_checkpoint = args.finetune_from_checkpoint
+    
+    if not os.path.exists(ckptdir):
+        os.system('mkdir -p ' + ckptdir)
+    
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print('DEVICE: ' + str(device))
 
@@ -92,6 +99,8 @@ def main():
     trainlist = os.path.join(datadir, 'sets/train_mos_list.txt')
     validlist = os.path.join(datadir, 'sets/val_mos_list.txt')
 
+    global SSL_OUT_DIM
+    
     ssl_model_type = cp_path.split('/')[-1]
     if ssl_model_type == 'wav2vec_small.pt':
         SSL_OUT_DIM = 768
@@ -104,7 +113,7 @@ def main():
     model, cfg, task = fairseq.checkpoint_utils.load_model_ensemble_and_task([cp_path])
     ssl_model = model[0]
     ssl_model.remove_pretraining_modules()
-
+    
     trainset = MyDataset(wavdir, trainlist)
     trainloader = DataLoader(trainset, batch_size=4, shuffle=True, num_workers=2, collate_fn=trainset.collate_fn)
 
@@ -114,6 +123,9 @@ def main():
     net = MosPredictor(ssl_model)
     net = net.to(device)
 
+    if my_checkpoint != None:  ## do (further) finetuning
+        net.load_state_dict(torch.load(my_checkpoint))
+    
     criterion = nn.L1Loss()
     optimizer = optim.SGD(net.parameters(), lr=0.0001, momentum=0.9)
 
@@ -158,7 +170,7 @@ def main():
         if avg_val_loss < PREV_VAL_LOSS:
             print('Loss has decreased')
             PREV_VAL_LOSS=avg_val_loss
-            PATH = './checkpoints/ckpt_' + str(epoch)
+            PATH = os.path.join(ckptdir, 'ckpt_' + str(epoch))
             torch.save(net.state_dict(), PATH)
             patience = orig_patience
         else:
