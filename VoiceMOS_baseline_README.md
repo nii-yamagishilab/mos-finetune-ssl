@@ -72,7 +72,7 @@ To run your own finetuning using the BVCC dataset, run:
 
 Once the training has finished, checkpoints can be found in the `checkpoints` directory.  The best one is the one with the highest number.  To run inference using this checkpoint, run:
 
-`python predict.py --fairseq_base_model fairseq/wav2vec_small.pt --finetuned_checkpoint checkpoints/ckpt_XX --datadir data/phase1-main/DATA`
+`python predict.py --fairseq_base_model fairseq/wav2vec_small.pt --finetuned_checkpoint checkpoints/ckpt_XX --datadir data/phase1-main/DATA --outfile answers_main.txt`
 
 
 ### Finetuning a model on OOD data
@@ -85,4 +85,4 @@ You can run secondary finetuning like this:
 
 Then, you can run inference same as before except pointing to your own finetuned model:
 
-`python predict.py --fairseq_base_model fairseq/wav2vec_small.pt --finetuned_checkpoint checkpoint_finetune_OOD/ckpt_XX --datadir data/phase1-main/DATA`
+`python predict.py --fairseq_base_model fairseq/wav2vec_small.pt --finetuned_checkpoint checkpoint_finetune_OOD/ckpt_XX --datadir data/phase1-main/DATA --outfile answer_ood.txt`

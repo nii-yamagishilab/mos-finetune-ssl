@@ -24,11 +24,13 @@ def main():
     parser.add_argument('--fairseq_base_model', type=str, required=True, help='Path to pretrained fairseq base model.')
     parser.add_argument('--datadir', type=str, required=True, help='Path of your DATA/ directory')
     parser.add_argument('--finetuned_checkpoint', type=str, required=True, help='Path to finetuned MOS prediction checkpoint.')
+    parser.add_argument('--outfile', type=str, required=False, default='answer.txt', help='Output filename for your answer.txt file for submission to the CodaLab leaderboard.')
     args = parser.parse_args()
     
     cp_path = args.fairseq_base_model
     my_checkpoint = args.finetuned_checkpoint
     datadir = args.datadir
+    outfile = args.outfile
 
     system_csv_path = os.path.join(datadir, 'mydata_system.csv')
 
@@ -150,7 +152,7 @@ def main():
     print('[SYSTEM] Kendall Tau rank correlation coefficient= %f' % KTAU[0])
 
     ## generate answer.txt for codalab
-    ans = open('answer.txt', 'w')
+    ans = open(outfile, 'w')
     for k, v in predictions.items():
         outl = k.split('.')[0] + ',' + str(v) + '\n'
         ans.write(outl)
