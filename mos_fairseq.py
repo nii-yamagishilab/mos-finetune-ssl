@@ -16,13 +16,11 @@ from torch.utils.data import DataLoader
 import random
 random.seed(1984)
 
-SSL_OUT_DIM=768
-
 class MosPredictor(nn.Module):
-    def __init__(self, ssl_model):
+    def __init__(self, ssl_model, ssl_out_dim):
         super(MosPredictor, self).__init__()
         self.ssl_model = ssl_model
-        self.ssl_features = SSL_OUT_DIM
+        self.ssl_features = ssl_out_dim
         self.output_layer = nn.Linear(self.ssl_features, 1)
         
     def forward(self, wav):
@@ -99,8 +97,6 @@ def main():
     trainlist = os.path.join(datadir, 'sets/train_mos_list.txt')
     validlist = os.path.join(datadir, 'sets/val_mos_list.txt')
 
-    global SSL_OUT_DIM
-    
     ssl_model_type = cp_path.split('/')[-1]
     if ssl_model_type == 'wav2vec_small.pt':
         SSL_OUT_DIM = 768
@@ -120,7 +116,7 @@ def main():
     validset = MyDataset(wavdir, validlist)
     validloader = DataLoader(validset, batch_size=2, shuffle=True, num_workers=2, collate_fn=validset.collate_fn)
 
-    net = MosPredictor(ssl_model)
+    net = MosPredictor(ssl_model, SSL_OUT_DIM)
     net = net.to(device)
 
     if my_checkpoint != None:  ## do (further) finetuning

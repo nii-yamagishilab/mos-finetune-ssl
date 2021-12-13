@@ -38,7 +38,17 @@ def main():
 
     print('Loading checkpoint')
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = MosPredictor(ssl_model).to(device)
+
+    ssl_model_type = cp_path.split('/')[-1]
+    if ssl_model_type == 'wav2vec_small.pt':
+        SSL_OUT_DIM = 768
+    elif ssl_model_type in ['w2v_large_lv_fsh_swbd_cv.pt', 'xlsr_53_56k.pt']:
+        SSL_OUT_DIM = 1024
+    else:
+        print('*** ERROR *** SSL model type ' + ssl_model_type + ' not supported.')
+        exit()
+
+    model = MosPredictor(ssl_model, SSL_OUT_DIM).to(device)
     model.eval()
 
     model.load_state_dict(torch.load(my_checkpoint))
