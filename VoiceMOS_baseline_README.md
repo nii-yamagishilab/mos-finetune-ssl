@@ -85,4 +85,4 @@ You can run secondary finetuning like this:
 
 Then, you can run inference same as before except pointing to your own finetuned model:
 
-`python predict.py --fairseq_base_model fairseq/wav2vec_small.pt --finetuned_checkpoint checkpoint_finetune_OOD/ckpt_XX --datadir data/phase1-main/DATA --outfile answer_ood.txt`
+`python predict.py --fairseq_base_model fairseq/wav2vec_small.pt --finetuned_checkpoint checkpoint_finetune_OOD/ckpt_XX --datadir data/phase1-ood/DATA --outfile answer_ood.txt`
