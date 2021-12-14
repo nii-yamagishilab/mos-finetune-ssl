@@ -51,16 +51,12 @@ Starting prediction
 [SYSTEM] Kendall Tau rank correlation coefficient= 0.810290
 ```
 
-A file called `answer.txt` will also be generated.
+A file called `answer_main.txt` will also be generated.
 
 To run zero-shot inference on the out-of-domain development set for the OOD track, you can simply point the command to the OOD data instead:
 
 `python run_inference_for_challenge.py --datadir data/phase1-ood/DATA`
 
-### Submission to CodaLab
-
-The submission format of the CodaLab competition platform is a zip file (can be any name) containing a text file called `answer.txt` (this naming is a **MUST**).  
-To submit to the CodaLab competition platform, compress `answer.txt` in zip format (via `zip` command in Linux or GUI in MacOS) and name it whatever you want. Then this zip file is ready to be submitted!
 
 ### Finetuning your own model
 
@@ -72,7 +68,7 @@ To run your own finetuning using the BVCC dataset, run:
 
 Once the training has finished, checkpoints can be found in the `checkpoints` directory.  The best one is the one with the highest number.  To run inference using this checkpoint, run:
 
-`python predict.py --fairseq_base_model fairseq/wav2vec_small.pt --finetuned_checkpoint checkpoints/ckpt_XX --datadir data/phase1-main/DATA --outfile answers_main.txt`
+`python predict.py --fairseq_base_model fairseq/wav2vec_small.pt --finetuned_checkpoint checkpoints/ckpt_XX --datadir data/phase1-main/DATA --outfile answer_main.txt`
 
 
 ### Finetuning a model on OOD data
@@ -85,4 +81,19 @@ You can run secondary finetuning like this:
 
 Then, you can run inference same as before except pointing to your own finetuned model:
 
-`python predict.py --fairseq_base_model fairseq/wav2vec_small.pt --finetuned_checkpoint checkpoint_finetune_OOD/ckpt_XX --datadir data/phase1-main/DATA --outfile answer_ood.txt`
+`python predict.py --fairseq_base_model fairseq/wav2vec_small.pt --finetuned_checkpoint checkpoint_finetune_OOD/ckpt_XX --datadir data/phase1-ood/DATA --outfile answer_ood.txt`
+
+
+### Submission to CodaLab
+
+The submission format of the CodaLab competition platform is a zip file (can be any name) containing a text file called `answer.txt` (this naming is a **MUST**).  
+
+You may submit main-track predictions only, or main-track and ood-track predictions together.  Since the main track is mandatory and the OOD track is optional, you may NOT submit OOD predictions by themselves -- this will fail to validate on CodaLab.
+
+You can prepare a submission file for CodaLab like this:
+```
+cat answer_main.txt answer_ood.txt > answer.txt
+zip -j anyname.zip answer.txt
+```
+
+Then this zip file is ready to be submitted!
