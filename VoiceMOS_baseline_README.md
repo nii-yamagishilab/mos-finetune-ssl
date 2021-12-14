@@ -93,7 +93,7 @@ You may submit main-track predictions only, or main-track and ood-track predicti
 You can prepare a submission file for CodaLab like this:
 ```
 cat answer_main.txt answer_ood.txt > answer.txt
-zip -j anyname.zip $answer.txt
+zip -j anyname.zip answer.txt
 ```
 
 Then this zip file is ready to be submitted!
