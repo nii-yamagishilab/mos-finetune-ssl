@@ -91,8 +91,9 @@ The submission format of the CodaLab competition platform is a zip file (can be 
 You may submit main-track predictions only, or main-track and ood-track predictions together.  Since the main track is mandatory and the OOD track is optional, you may NOT submit OOD predictions by themselves -- this will fail to validate on CodaLab.
 
 You can prepare a submission file for CodaLab like this:
-```cat answer_main.txt answer_ood.txt > answer.txt
+```
+cat answer_main.txt answer_ood.txt > answer.txt
 zip -j anyname.zip $answer.txt
 ```
 
-To submit to the CodaLab competition platform, compress `answer.txt` in zip format (via `zip` command in Linux or GUI in MacOS) and name it whatever you want. Then this zip file is ready to be submitted!
+Then this zip file is ready to be submitted!
