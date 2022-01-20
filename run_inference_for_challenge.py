@@ -32,7 +32,7 @@ def main():
         os.system('rm ckpt_w2vsmall.tar.gz')
         os.system('cp fairseq/LICENSE pretrained/')
 
-    ## 2. run inference
+    ## 3. run inference
     os.system('python predict.py --fairseq_base_model fairseq/wav2vec_small.pt --outfile answer_main.txt --finetuned_checkpoint pretrained/ckpt_w2vsmall --datadir ' + DATADIR)
 
 main()
