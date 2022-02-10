@@ -1,6 +1,6 @@
 # Finetune SSL models for MOS prediction
 
-This is code for our paper under review for ICASSP 2022:
+This is code for our paper which has been accepted to ICASSP 2022:
 
 "Generalization Ability of MOS Prediction Networks"  Erica Cooper, Wen-Chin Huang, Tomoki Toda, Junichi Yamagishi  https://arxiv.org/abs/2110.02635
 
