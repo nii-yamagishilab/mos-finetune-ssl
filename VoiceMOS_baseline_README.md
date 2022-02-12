@@ -51,7 +51,7 @@ Starting prediction
 [SYSTEM] Kendall Tau rank correlation coefficient= 0.810290
 ```
 
-A file called `answer_main.txt` will also be generated.
+A file called `answer_main.txt` will also be generated.  An example `answer.txt` file generated from the wav2vec2-small-based model is included in this repository.
 
 To run zero-shot inference on the out-of-domain development set for the OOD track, you can simply point the command to the OOD data instead:
 
