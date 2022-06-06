@@ -12,7 +12,7 @@ Please cite this preprint if you use this code.
  * torch, numpy, scipy, torchaudio
  * I have exported my conda environment for this project to `environment.yml`
  * You also need to download a pretrained wav2vec2 model checkpoint.  These can be obtained here:  https://github.com/pytorch/fairseq/tree/main/examples/wav2vec  If you are using the `run_inference_for_challenge.py` script, one will be downloaded for you automatically.  Otherwise, please choose `wav2vec_small.pt`, `w2v_large_lv_fsh_swbd_cv.pt`, or `xlsr_53_56k.pt`. 
- * You also need to have a MOS dataset.  Datasets for the MOS prediction challenge will be released once the challenge starts.
+ * You also need to have a MOS dataset.  You can find the BVCC dataset of MOS ratings that was used for the VoiceMOS Challenge here:  https://zenodo.org/record/6572573#.Yphw5y8RprQ
 
 ## How to use
 
