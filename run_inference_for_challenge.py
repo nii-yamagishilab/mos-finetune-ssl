@@ -26,7 +26,7 @@ def main():
     ## 2. download the finetuned checkpoint
     if not os.path.exists('pretrained/ckpt_w2vsmall'):
         os.system('mkdir -p pretrained')
-        os.system('wget https://www.dropbox.com/s/brjocxwaiemayga/ckpt_w2vsmall.tar.gz')
+        os.system('wget https://zenodo.org/record/6785056/files/ckpt_w2vsmall.tar.gz')
         os.system('tar -zxvf ckpt_w2vsmall.tar.gz')
         os.system('mv ckpt_w2vsmall pretrained/')
         os.system('rm ckpt_w2vsmall.tar.gz')
