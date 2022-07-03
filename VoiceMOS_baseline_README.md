@@ -33,7 +33,7 @@ data
 
 ### Inference from pretrained model
 
-We provide a pre-finetuned model on Dropbox; to download it and run inference, run:
+We provide a pre-finetuned model on ~~Dropbox~~ Zenodo; to download it and run inference, run:
 
 `python run_inference_for_challenge.py --datadir data/phase1-main/DATA`
 
