@@ -16,7 +16,7 @@ Please cite this preprint if you use this code.
 
 ## How to use
 
-Please see instructions in `VoiceMOS_baseline_README.md`
+Please see instructions in `VoiceMOS_baseline_README.md`.  See the section called `Inference from pretrained model` for instructions for how to run MOS prediction on audio files using a pretrained model.
 
 ## Acknowledgments
 
