@@ -21,6 +21,7 @@ Please cite this preprint if you use this code.
 Run `python run_inference.py --datadir /path/to/your/wavdir`
 
 The `wavdir` should contain .wav audio files for which you want to predict MOS.
+
 **Note:** These .wav files should already be downsampled to 16kHz and sv56-normalized.  Please do this by yourself first.
 The output will be `answers.txt` which will contain the name of each audio file and its predicted MOS.
 
