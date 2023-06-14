@@ -16,7 +16,19 @@ Please cite this preprint if you use this code.
 
 ## How to use
 
-Please see instructions in `VoiceMOS_baseline_README.md`.  See the section called `Inference from pretrained model` for instructions for how to run MOS prediction on audio files using a pretrained model.
+### Updated 2023-06-14: Easy-to-use inference script with pretrained model:
+
+Run `python run_inference.py --datadir /path/to/your/wavdir`
+
+The `wavdir` should contain .wav audio files for which you want to predict MOS.
+**Note:** These .wav files should already be downsampled to 16kHz and sv56-normalized.  Please do this by yourself first.
+The output will be `answers.txt` which will contain the name of each audio file and its predicted MOS.
+
+**CAVEAT EMPTOR:** This MOS predictor is experimental technology.  It was trained on English-language audio samples from text-to-speech and voice conversion systems from 2008-2020, with their MOS ratings for naturalness.  It may not work well on audio from other models, languages, domains, speakers, etc.  That being said, we would be really happy to hear about any ways that you are using this pretrained model, and how well it worked for your use case -- please let us know if you have comments or if you publish your results!
+
+### Other usage: training a model from scratch, fine-tuning, etc.:
+
+Please see instructions in `VoiceMOS_baseline_README.md`. 
 
 ## Acknowledgments
 
